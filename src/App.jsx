@@ -7,7 +7,7 @@ import RegisterPage from "./pages/RegisterPage";
 import PlansPage from "./pages/PlanPage";
 import SubscribePage from "./pages/SubscribePage";
 import UserDashboard from "./pages/UserDashboard";
-import AdminDashboard from "./pages/AdminDashboard";
+import OperatorDashboard from "./pages/OperatorDashboard";
 
 function App() {
   return (
@@ -37,12 +37,12 @@ function App() {
           }
         />
 
-        {/* Protected - admin only */}
+        {/* Protected - operator only */}
         <Route
-          path="/admin"
+          path="/operator"
           element={
-            <ProtectedRoute requiredRole="admin">
-              <AdminDashboard />
+            <ProtectedRoute requiredRole="operator">
+              <OperatorDashboard />
             </ProtectedRoute>
           }
         />

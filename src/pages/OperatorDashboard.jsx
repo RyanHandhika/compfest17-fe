@@ -1,5 +1,4 @@
 import Sidebar from "../components/Sidebar";
-import Footer from "../components/Footer";
 import { useState } from "react";
 
 const stats = [
@@ -164,19 +163,19 @@ function BarChart() {
   );
 }
 
-export default function AdminDashboard() {
+export default function OperatorDashboard() {
   const [search, setSearch] = useState("");
 
   return (
     <div className="flex min-h-screen bg-green-50/30">
-      <Sidebar isAdmin={true} />
+      <Sidebar isOperator={true} />
 
       <main className="ml-48 flex-1 p-8">
         {/* Header */}
         <div className="flex items-start justify-between mb-8">
           <div>
             <h1 className="text-4xl font-bold text-gray-900">
-              Admin Dashboard
+              Operator Dashboard
             </h1>
             <p className="text-gray-500 text-sm mt-1">
               Real-time overview of SEA Catering's operational health.
