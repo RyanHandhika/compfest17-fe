@@ -98,11 +98,11 @@ const navItems = [
   },
 ];
 
-export default function Sidebar({ isOperator = false }) {
+export default function Sidebar({ isAdmin = false }) {
   const location = useLocation();
   const navigate = useNavigate();
 
-  const activePath = isOperator ? "/operator" : "/user-dashboard";
+  const activePath = isAdmin ? "/admin" : "/user-dashboard";
 
   return (
     <aside className="w-48 min-h-screen bg-white border-r border-gray-100 flex flex-col fixed left-0 top-0 bottom-0 z-40">
@@ -119,9 +119,9 @@ export default function Sidebar({ isOperator = false }) {
         {navItems.map((item) => {
           const isActive =
             location.pathname === item.path ||
-            (isOperator &&
-              item.path === "/operator" &&
-              location.pathname === "/operator");
+            (isAdmin &&
+              item.path === "/admin" &&
+              location.pathname === "/admin");
           const active = location.pathname === item.path;
           return (
             <Link
@@ -203,7 +203,7 @@ export default function Sidebar({ isOperator = false }) {
         </button>
 
         {/* User avatar (only for user dashboard) */}
-        {!isOperator && (
+        {!isAdmin && (
           <div className="flex items-center gap-2 px-3 py-2 mt-2">
             <div className="w-8 h-8 bg-green-700 rounded-full flex items-center justify-center text-white text-xs font-bold">
               JD
