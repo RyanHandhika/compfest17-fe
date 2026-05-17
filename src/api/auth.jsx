@@ -8,10 +8,10 @@ export async function login(email, password) {
 
 export async function register(fullName, email, password, role) {
   const response = await client.post("/auth/register", {
-    fullName,
+    full_name: fullName,
     email,
     password,
-    role,
+    role: role.toUpperCase(),
   });
   localStorage.setItem("token", response.data.token);
   return response.data;
