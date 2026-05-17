@@ -1,4 +1,5 @@
 import { Link, useNavigate, useLocation } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 
 const navItems = [
   {
@@ -101,8 +102,21 @@ const navItems = [
 export default function Sidebar({ isOperator = false }) {
   const location = useLocation();
   const navigate = useNavigate();
+  const { user, logout } = useAuth();
 
-  const activePath = isOperator ? "/operator" : "/user-dashboard";
+  const initials = user?.fullName
+    ? user.fullName
+        .split(" ")
+        .map((n) => n[0])
+        .join("")
+        .toUpperCase()
+        .slice(0, 2)
+    : "?";
+
+  function handleLogout() {
+    logout();
+    navigate("/login");
+  }
 
   return (
     <aside className="w-48 min-h-screen bg-white border-r border-gray-100 flex flex-col fixed left-0 top-0 bottom-0 z-40">
@@ -117,11 +131,6 @@ export default function Sidebar({ isOperator = false }) {
       {/* Nav */}
       <nav className="flex-1 py-4 px-3 space-y-1">
         {navItems.map((item) => {
-          const isActive =
-            location.pathname === item.path ||
-            (isOperator &&
-              item.path === "/operator" &&
-              location.pathname === "/operator");
           const active = location.pathname === item.path;
           return (
             <Link
@@ -160,6 +169,7 @@ export default function Sidebar({ isOperator = false }) {
           </div>
           Support
         </button>
+
         <button className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-gray-500 hover:bg-gray-50 w-full">
           <svg
             className="w-5 h-5"
@@ -182,8 +192,10 @@ export default function Sidebar({ isOperator = false }) {
           </svg>
           Settings
         </button>
+
+        {/* ✅ Logout yang benar */}
         <button
-          onClick={() => navigate("/login")}
+          onClick={handleLogout}
           className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-red-400 hover:bg-red-50 w-full"
         >
           <svg
@@ -202,14 +214,16 @@ export default function Sidebar({ isOperator = false }) {
           Logout
         </button>
 
-        {/* User avatar (only for user dashboard) */}
-        {!isOperator && (
+        {/* ✅ Nama user dinamis dari AuthContext */}
+        {!isOperator && user && (
           <div className="flex items-center gap-2 px-3 py-2 mt-2">
             <div className="w-8 h-8 bg-green-700 rounded-full flex items-center justify-center text-white text-xs font-bold">
-              JD
+              {initials}
             </div>
             <div>
-              <p className="text-xs font-semibold text-gray-700">John Doe</p>
+              <p className="text-xs font-semibold text-gray-700">
+                {user.fullName}
+              </p>
               <p className="text-xs text-gray-400">Pro Member</p>
             </div>
           </div>
